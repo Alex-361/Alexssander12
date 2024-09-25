@@ -18,6 +18,10 @@ function App() {
   const [diaSelecionado, setDiaSelecionado] = useState('Segunda-feira');
   const [periodoSelecionado, setPeriodoSelecionado] = useState('manha');
 
+  // Estado para armazenar as atividades concluídas
+  const [atividadesConcluidas, setAtividadesConcluidas] = useState({});
+
+  // Função para adicionar atividade
   const adicionarAtividade = () => {
     if (!atividade) return;
 
@@ -31,6 +35,15 @@ function App() {
 
     // Limpar os campos após adicionar
     setAtividade('');
+  };
+
+  // Função para marcar a atividade como concluída
+  const toggleConcluida = (dia, periodo) => {
+    const key = `${dia}-${periodo}`;
+    setAtividadesConcluidas((prev) => ({
+      ...prev,
+      [key]: !prev[key], // Alterna entre verdadeiro e falso
+    }));
   };
 
   return (
@@ -66,13 +79,37 @@ function App() {
         <div key={dia} className="dia-container">
           <h2>{dia}</h2>
           <div className="periodo-container">
-            <strong>Manhã:</strong> {estudos[dia].manha}
+            <strong>Manhã:</strong>
+            <span style={{ textDecoration: atividadesConcluidas[`${dia}-manha`] ? 'line-through' : 'none' }}>
+              {estudos[dia].manha}
+            </span>
+            {estudos[dia].manha && (
+              <button onClick={() => toggleConcluida(dia, 'manha')}>
+                {atividadesConcluidas[`${dia}-manha`] ? 'Marcar como não concluída' : 'Marcar como concluída'}
+              </button>
+            )}
           </div>
           <div className="periodo-container">
-            <strong>Tarde:</strong> {estudos[dia].tarde}
+            <strong>Tarde:</strong>
+            <span style={{ textDecoration: atividadesConcluidas[`${dia}-tarde`] ? 'line-through' : 'none' }}>
+              {estudos[dia].tarde}
+            </span>
+            {estudos[dia].tarde && (
+              <button onClick={() => toggleConcluida(dia, 'tarde')}>
+                {atividadesConcluidas[`${dia}-tarde`] ? 'Marcar como não concluída' : 'Marcar como concluída'}
+              </button>
+            )}
           </div>
           <div className="periodo-container">
-            <strong>Noite:</strong> {estudos[dia].noite}
+            <strong>Noite:</strong>
+            <span style={{ textDecoration: atividadesConcluidas[`${dia}-noite`] ? 'line-through' : 'none' }}>
+              {estudos[dia].noite}
+            </span>
+            {estudos[dia].noite && (
+              <button onClick={() => toggleConcluida(dia, 'noite')}>
+                {atividadesConcluidas[`${dia}-noite`] ? 'Marcar como não concluída' : 'Marcar como concluída'}
+              </button>
+            )}
           </div>
         </div>
       ))}
