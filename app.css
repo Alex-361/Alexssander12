@@ -1,10 +1,10 @@
 body {
-    background-color: #e6f7ff; /* Azul claro */
-    color: #333;
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
+  background-color: #f0f0f0; /* Cinza claro */
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
   
   .app-container {
     max-width: 800px;
